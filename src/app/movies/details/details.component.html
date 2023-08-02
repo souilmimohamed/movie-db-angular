@@ -1,0 +1,45 @@
+<div class="movie-details" [style.backgroundImage]="'url(' + backDrop + ')'">
+  <div class="overlay"></div>
+  <div class="movie-info">
+    <h1>{{ model.title }}</h1>
+    <p>{{ model.overview }}</p>
+    <p class="release-date">
+      <span class="title">Release Date</span>{{ model.release_date }}
+    </p>
+    <div class="genres-list">
+      <ul class="genres">
+        <li *ngFor="let genre of model.genres">{{ genre.name }}</li>
+      </ul>
+    </div>
+    <br />
+    <div class="sub-infos">
+      <p class="title">Budget:</p>
+      <span>{{ model.budget.toLocaleString("en-US") }}$&nbsp;&nbsp;</span>
+
+      <p class="title">Revenue:</p>
+      <span> {{ model.revenue.toLocaleString("en-US") }}$&nbsp;&nbsp;</span>
+
+      <p class="title"></p>
+      Duration: <span> {{ timeConvert(model.runtime) }}</span>
+    </div>
+    <br />
+    <p class="title">Director</p>
+    <span>{{ director }}</span>
+    <div class="cast-list" #content>
+      <app-cast-member-card *ngFor="let member of cast" [castMember]="member">
+      </app-cast-member-card>
+    </div>
+    <div class="scroll-buttons">
+      <button (click)="scrollLeft()">{{ "<<" }}</button>
+      <button (click)="scrollRight()">{{ ">>" }}</button>
+    </div>
+  </div>
+  <div class="production-companies-list">
+    <ul class="companies">
+      <app-prod-company-card
+        *ngFor="let company of model.production_companies"
+        [company]="company"
+      ></app-prod-company-card>
+    </ul>
+  </div>
+</div>

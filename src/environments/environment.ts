@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  imgApi: 'https://image.tmdb.org/t/p/original/',
+  apiKey: 'f59e304e3922f0a7a51c9641f586f1d5',
 };
 
 /*

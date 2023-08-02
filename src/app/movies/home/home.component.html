@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="search-box">
+    <a href="#">
+      <h1>MoviesDB App</h1>
+    </a>
+    <span>select one or more genres</span>
+    <select
+      class="genre-select"
+      (change)="setSelected($event)"
+      [(ngModel)]="selectedOption"
+    >
+      <option [ngValue]="" disabled></option>
+      <option value="{{ genre.id }}" *ngFor="let genre of genres$ | async">
+        {{ genre.name }}
+      </option>
+    </select>
+    <div class="type">
+      <button>movies</button>
+      <button>tv shows</button>
+    </div>
+    <div class="form">
+      <input
+        type="text"
+        placeholder="Search for a movie..."
+        [(ngModel)]="searchText"
+      />
+      <button class="search-btn" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+  <div class="seleted-genres">
+    <app-chip
+      *ngFor="let genre of selectedGenres"
+      title="{{ genre.name }}"
+      (close)="closeSelected(genre.id)"
+    ></app-chip>
+  </div>
+  <br />
+  <div
+    class="result"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()"
+  >
+    <app-movie-card
+      *ngFor="let movie of movies$ | async"
+      [movie]="movie"
+    ></app-movie-card>
+  </div>
+</div>

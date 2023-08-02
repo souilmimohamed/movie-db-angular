@@ -1,0 +1,17 @@
+<div class="cast-member">
+  <img
+    class="cast-image"
+    [src]="memberImage"
+    *ngIf="castMember && castMember.profile_path"
+  />
+
+  <img
+    class="cast-image"
+    src="/assets/images/placeholder.jpg"
+    alt="no-image"
+    *ngIf="castMember && !castMember.profile_path"
+  />
+
+  <div class="cast-name">{{ castMember.name }}</div>
+  <div class="cast-character">{{ castMember.character }}</div>
+</div>
