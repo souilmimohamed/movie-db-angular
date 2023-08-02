@@ -1,6 +1,6 @@
-import { movie, searchParams } from 'src/app/models/main.models';
+import { movie } from 'src/app/models/main.models';
 import { createReducer, on } from '@ngrx/store';
-import { FetchMoviesAPISuccess, MoviesSearchSuccess } from './movies.action';
+import { FetchMoviesAPISuccess } from './movies.action';
 
 export interface moviesState {
   movies: movie[];
@@ -16,8 +16,5 @@ export const moviesReducer = createReducer(
     } else {
       return [...state, ...movies];
     }
-  }),
-  on(MoviesSearchSuccess, (state, { movies }) => {
-    return [...movies];
   })
 );

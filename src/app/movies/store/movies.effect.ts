@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Appstate } from 'src/app/shared/store/app.state';
-import {
-  FetchMoviesAPISuccess,
-  InvokeMoviesAPI,
-  InvokeMoviesSearch,
-  MoviesSearchSuccess,
-} from './movies.action';
+import { FetchMoviesAPISuccess, InvokeMoviesAPI } from './movies.action';
 import { map, switchMap } from 'rxjs';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { MoviesService } from '../movies.service';
@@ -57,42 +52,6 @@ export class MoviesEffect {
                 movies: [],
                 isSearch: action.searchParams.isSearch,
               });
-            }
-          })
-        );
-      })
-    );
-  });
-
-  searchovies$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(InvokeMoviesSearch),
-      switchMap((action) => {
-        this.appStore.dispatch(
-          setAPIStatus({ apiStatus: { apiResponseMessage: [], apiStatus: '' } })
-        );
-        this.setLoadingState(true);
-        return this.moviesservice.getMovies(action.searchParams).pipe(
-          map((data) => {
-            if (data.Success) {
-              this.appStore.dispatch(
-                setAPIStatus({
-                  apiStatus: { apiResponseMessage: [], apiStatus: 'success' },
-                })
-              );
-              this.setLoadingState(false);
-              return MoviesSearchSuccess({ movies: data.results });
-            } else {
-              this.appStore.dispatch(
-                setAPIStatus({
-                  apiStatus: {
-                    apiResponseMessage: data.Errors,
-                    apiStatus: 'failure',
-                  },
-                })
-              );
-              this.setLoadingState(false);
-              return MoviesSearchSuccess({ movies: [] });
             }
           })
         );

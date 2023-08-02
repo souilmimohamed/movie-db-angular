@@ -13,8 +13,10 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { loadingReducer } from './shared/loaderStore/loader.reducer';
 import { genresReducer } from './shared/genresStore/genres.reducer';
 import { GenresEffect } from './shared/genresStore/genres.effects';
+import { TvShowsComponent } from './tv-shows/tv-shows.component';
+import { HomeComponent } from './tv-shows/home/home.component';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TvShowsComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -31,15 +31,6 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     EffectsModule.forFeature([MoviesEffect]),
     FormsModule,
     InfiniteScrollModule,
-    NgxSkeletonLoaderModule.forRoot({
-      animation: 'pulse',
-      theme: {
-        // Enabliong theme combination
-        extendsFromRoot: true,
-        // ... list of CSS theme attributes
-        height: '360px',
-      },
-    }),
   ],
 })
 export class MoviesModule {}
