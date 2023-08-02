@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   movies$ = this.store.pipe(select(selectMovies));
   genres$ = this.store.pipe(select(selectGenres));
   selectedGenres: genre[] = [];
-  selectedOption: string | null;
+  selectedOption: string | null = null;
   ngOnInit(): void {
     this.store.dispatch(InvokeMoviesAPI({ searchParams: this.searchModel }));
     this.store.dispatch(InvokeGenresAPI({ _type: 'movie' }));

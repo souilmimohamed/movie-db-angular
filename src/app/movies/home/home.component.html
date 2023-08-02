@@ -9,7 +9,7 @@
       (change)="setSelected($event)"
       [(ngModel)]="selectedOption"
     >
-      <option [ngValue]="" disabled></option>
+      <option [ngValue]="null" disabled selected></option>
       <option value="{{ genre.id }}" *ngFor="let genre of genres$ | async">
         {{ genre.name }}
       </option>
