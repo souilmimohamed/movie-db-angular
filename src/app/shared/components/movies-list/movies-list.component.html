@@ -1,0 +1,12 @@
+<div
+  class="result"
+  infinite-scroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()"
+>
+  <app-movie-card
+    *ngFor="let movie of list | async"
+    [movie]="movie"
+  ></app-movie-card>
+</div>

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { searchParams } from '../models/main.models';
+import { searchParams } from './models/main.models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MoviesService {
+export class AppService {
   constructor(private http: HttpClient) {}
   getMovies(searchParams: searchParams) {
     const _genres =
       searchParams && searchParams.genres && searchParams.genres.length > 0
-        ? `?with_genres=${searchParams.genres.join('|')}&`
+        ? `?with_genres=${searchParams.genres.map((g) => g.id).join('|')}&`
         : `?`;
     const url =
       searchParams && searchParams.searchText
@@ -20,6 +20,7 @@ export class MoviesService {
     return this.http.get<any>(url);
   }
   getById(id: number, type: string) {
+    console.log(type);
     return this.http.get<any>(
       `https://api.themoviedb.org/3/${type}/${id}?api_key=${environment.apiKey}`
     );

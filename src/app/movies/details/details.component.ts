@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MoviesService } from '../movies.service';
+import { AppService } from '../../app.service';
 import { castMember, movie } from 'src/app/models/main.models';
 import { switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit {
   @ViewChild('content', { static: false }) content: ElementRef;
   constructor(
     private route: ActivatedRoute,
-    private moviesservice: MoviesService,
+    private appservice: AppService,
     private router: Router
   ) {}
 
@@ -40,13 +40,13 @@ export class DetailsComponent implements OnInit {
     let fetchData$ = this.route.paramMap.pipe(
       switchMap((params) => {
         var id = parseInt(String(params.get('id')));
-        return this.moviesservice.getById(id, 'movie');
+        return this.appservice.getById(id, 'movie');
       })
     );
     let fetchCrew$ = this.route.paramMap.pipe(
       switchMap((params) => {
         var id = parseInt(String(params.get('id')));
-        return this.moviesservice.getCast(id, 'movie');
+        return this.appservice.getCast(id, 'movie');
       })
     );
     fetchData$.subscribe((data) => {

@@ -5,7 +5,7 @@ import { Appstate } from 'src/app/shared/store/app.state';
 import { FetchMoviesAPISuccess, InvokeMoviesAPI } from './movies.action';
 import { map, switchMap } from 'rxjs';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
-import { MoviesService } from '../movies.service';
+import { AppService } from '../../app.service';
 import { SetLoading } from 'src/app/shared/loaderStore/loader.action';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class MoviesEffect {
   constructor(
     private actions$: Actions,
     private appStore: Store<Appstate>,
-    private moviesservice: MoviesService,
+    private appservice: AppService,
     private loadingStore: Store
   ) {}
 
@@ -25,7 +25,7 @@ export class MoviesEffect {
           setAPIStatus({ apiStatus: { apiResponseMessage: [], apiStatus: '' } })
         );
         this.setLoadingState(true);
-        return this.moviesservice.getMovies(action.searchParams).pipe(
+        return this.appservice.getMovies(action.searchParams).pipe(
           map((data) => {
             if (data) {
               this.appStore.dispatch(

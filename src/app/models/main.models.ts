@@ -28,7 +28,7 @@ export interface searchParams {
   searchText: string;
   page: number;
   type: string;
-  genres: number[];
+  genres: genre[];
 }
 
 export interface castMember {

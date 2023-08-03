@@ -11,26 +11,33 @@ import { appReducer } from './shared/store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { loadingReducer } from './shared/loaderStore/loader.reducer';
-import { genresReducer } from './shared/genresStore/genres.reducer';
-import { GenresEffect } from './shared/genresStore/genres.effects';
+import { MoviesEffect } from './movies/store/movies.effect';
+import { moviesReducer } from './movies/store/movies.reducer';
+import { tvshowsReducer } from './tv-shows/store/tv-shows.reducer';
+import { TvShowsEffect } from './tv-shows/store/tv-shows.effect';
+import { SharedModule } from './shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    SharedModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
     StoreModule.forRoot({
       appState: appReducer,
       loading: loadingReducer,
-      genres: genresReducer,
     }),
-    StoreModule.forFeature('mygenres', genresReducer),
+    StoreModule.forFeature('mymovies', moviesReducer),
+    StoreModule.forFeature('myshows', tvshowsReducer),
+    EffectsModule.forRoot([MoviesEffect, TvShowsEffect]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([GenresEffect]),
-    HttpClientModule,
-    BrowserAnimationsModule,
     NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.circle,
       backdropBackgroundColour: 'rgba(0,0,0,0.1)',

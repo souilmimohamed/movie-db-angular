@@ -1,1 +1,42 @@
-<p>details works!</p>
+<div class="movie-details" [style.backgroundImage]="'url(' + backDrop + ')'">
+  <div class="overlay"></div>
+  <div class="movie-info">
+    <h1>{{ model.name }}</h1>
+    <p>{{ model.overview }}</p>
+    <p class="release-date">
+      <span class="title">First Air Date</span>{{ model.first_air_date }}
+    </p>
+    <div class="genres-list">
+      <ul class="genres">
+        <li *ngFor="let genre of model.genres">{{ genre.name }}</li>
+      </ul>
+    </div>
+    <br />
+    <div class="sub-infos">
+      <p class="title">Saisons:</p>
+      <span> {{ model.number_of_seasons }}</span>
+    </div>
+    <br />
+    <p class="title">Director</p>
+    <span>{{ director }}</span>
+    <br /><br />
+    <p class="title">Producers</p>
+    <span>{{ producers }}</span>
+    <div class="cast-list" #content>
+      <app-cast-member-card *ngFor="let member of cast" [castMember]="member">
+      </app-cast-member-card>
+    </div>
+    <div class="scroll-buttons">
+      <button (click)="scrollLeft()">{{ "<<" }}</button>
+      <button (click)="scrollRight()">{{ ">>" }}</button>
+    </div>
+  </div>
+  <div class="production-companies-list">
+    <ul class="companies">
+      <app-prod-company-card
+        *ngFor="let company of model.production_companies"
+        [company]="company"
+      ></app-prod-company-card>
+    </ul>
+  </div>
+</div>

@@ -10,41 +10,50 @@
       [(ngModel)]="selectedOption"
     >
       <option [ngValue]="null" disabled selected></option>
-      <option value="{{ genre.id }}" *ngFor="let genre of genres$ | async">
+      <option value="{{ genre.id }}" *ngFor="let genre of genres">
         {{ genre.name }}
       </option>
     </select>
     <div class="type">
-      <button>movies</button>
-      <button>tv shows</button>
+      <button (click)="switchType('movie')">movies</button>
+      <button (click)="switchType('tv')">tv shows</button>
     </div>
     <div class="form">
       <input
         type="text"
         placeholder="Search for a movie..."
         [(ngModel)]="searchText"
+        (ngModelChange)="setText($event)"
       />
       <button class="search-btn" (click)="onSearch()">Search</button>
     </div>
   </div>
-  <div class="seleted-genres">
+  <div
+    class="seleted-genres"
+    *ngIf="
+      this.searchModel &&
+      this.searchModel.genres &&
+      this.searchModel.genres.length > 0
+    "
+  >
     <app-chip
-      *ngFor="let genre of selectedGenres"
+      *ngFor="let genre of this.searchModel.genres"
       title="{{ genre.name }}"
       (close)="closeSelected(genre.id)"
     ></app-chip>
   </div>
   <br />
-  <div
-    class="result"
-    infinite-scroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()"
+</div>
+<div class="container">
+  <app-movies-list
+    [list]="movies$"
+    (scroll)="onScroll()"
+    *ngIf="type === 'movie'"
+  ></app-movies-list>
+  <app-tvshows-list
+    [list]="tvshows$"
+    (scroll)="onScroll()"
+    *ngIf="type === 'tv'"
   >
-    <app-movie-card
-      *ngFor="let movie of movies$ | async"
-      [movie]="movie"
-    ></app-movie-card>
-  </div>
+  </app-tvshows-list>
 </div>

@@ -1,20 +1,21 @@
 <div class="column">
   <div class="card">
     <a class="card-media" href="./img-01.jpeg">
-      <img [src]="imagePath" [alt]="movie.title" width="100%" />
+      <img [src]="imagePath" [alt]="show.name" width="100%" />
     </a>
     <div class="card-content">
       <div class="card-header">
         <div class="left-content">
           <h3 style="font-weight: 600">{{ truncatedTitle }}</h3>
-          <span style="color: #12efec">released {{ formattedDate }}</span>
+          <span style="color: #12efec"> first aired {{ formattedDate }} </span>
         </div>
         <div class="right-content">
-          <a [routerLink]="['movie/details', movie.id]" class="card-btn">
+          <a [routerLink]="['tvshow/details', show.id]" class="card-btn">
             See Details
           </a>
         </div>
       </div>
+      <div class="info">{{ show.overview || "No overview yet..." }}</div>
     </div>
   </div>
 </div>

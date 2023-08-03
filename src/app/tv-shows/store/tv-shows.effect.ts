@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Appstate } from '../store/app.state';
-import { MoviesService } from 'src/app/movies/movies.service';
-import { FetchGenresAPISuccess, InvokeGenresAPI } from './genres.action';
+import { Appstate } from 'src/app/shared/store/app.state';
 import { map, switchMap } from 'rxjs';
-import { setAPIStatus } from '../store/app.action';
+import { setAPIStatus } from 'src/app/shared/store/app.action';
+import { AppService } from 'src/app/app.service';
+import { SetLoading } from 'src/app/shared/loaderStore/loader.action';
+import { FetchTvShowsAPISuccess, InvokeTvShowsAPI } from './tv-shows.action';
 
 @Injectable()
-export class GenresEffect {
+export class TvShowsEffect {
   constructor(
     private actions$: Actions,
     private appStore: Store<Appstate>,
-    private moviesservice: MoviesService,
+    private appservice: AppService,
     private loadingStore: Store
   ) {}
 
   loadMovies$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(InvokeGenresAPI),
+      ofType(InvokeTvShowsAPI),
       switchMap((action) => {
         this.appStore.dispatch(
           setAPIStatus({ apiStatus: { apiResponseMessage: [], apiStatus: '' } })
         );
-        return this.moviesservice.getGenres(action._type).pipe(
+        this.setLoadingState(true);
+        return this.appservice.getMovies(action.searchParams).pipe(
           map((data) => {
             if (data) {
               this.appStore.dispatch(
@@ -31,8 +33,10 @@ export class GenresEffect {
                   apiStatus: { apiResponseMessage: [], apiStatus: 'success' },
                 })
               );
-              return FetchGenresAPISuccess({
-                genres: data.genres,
+              this.setLoadingState(false);
+              return FetchTvShowsAPISuccess({
+                shows: data.results,
+                isSearch: action.searchParams.isSearch,
               });
             } else {
               this.appStore.dispatch(
@@ -43,8 +47,10 @@ export class GenresEffect {
                   },
                 })
               );
-              return FetchGenresAPISuccess({
-                genres: [],
+              this.setLoadingState(false);
+              return FetchTvShowsAPISuccess({
+                shows: [],
+                isSearch: action.searchParams.isSearch,
               });
             }
           })
@@ -52,4 +58,7 @@ export class GenresEffect {
       })
     );
   });
+  setLoadingState(state: boolean) {
+    this.loadingStore.dispatch(SetLoading({ isLoading: state }));
+  }
 }

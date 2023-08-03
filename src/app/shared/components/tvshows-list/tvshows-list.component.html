@@ -1,0 +1,12 @@
+<div
+  class="result"
+  infinite-scroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()"
+>
+  <app-tvshow-card
+    *ngFor="let show of list | async"
+    [show]="show"
+  ></app-tvshow-card>
+</div>

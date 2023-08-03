@@ -25,6 +25,9 @@
     <br />
     <p class="title">Director</p>
     <span>{{ director }}</span>
+    <br /><br />
+    <p class="title">Producers</p>
+    <span>{{ producers }}</span>
     <div class="cast-list" #content>
       <app-cast-member-card *ngFor="let member of cast" [castMember]="member">
       </app-cast-member-card>
